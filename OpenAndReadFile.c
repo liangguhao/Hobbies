@@ -16,36 +16,36 @@ int FileSize (int fd)
 	int alloc_size = 20;
 	int ret;
 	int f_tmpsize = 0;
-	char *c;
+	char *tmp_c;
 	while (1)
 	{
-		c = (char *)malloc(alloc_size * sizeof(char));
-		if (!c)
+		tmp_c = (char *)malloc(alloc_size * sizeof(char));
+		if (!tmp_c)
 			return -1;
-		ret = read(fd,c,alloc_size);
+		ret = read(fd,tmp_c,alloc_size);
 		if (ret == -1)
 		{
-			free(c);
+			free(tmp_c);
 			printf("f_read\n");
 		}
 		else if (ret == alloc_size)
 		{
-			free(c);
+			free(tmp_c);
 			f_tmpsize = f_tmpsize + 1;
 		}
 		else if (ret == 0 )
 		{
-			free(c);
+			free(tmp_c);
 			ret = f_tmpsize * alloc_size;
 			break;
 		}
 		else
 		{
-			free(c);
+			free(tmp_c);
 			ret = f_tmpsize * alloc_size + ret;
 			break;
 		}
-	}
+	}	
 	return ret;
 }
 

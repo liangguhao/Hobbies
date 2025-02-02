@@ -4,21 +4,24 @@
 
 char* getuserinput (int *ret)
 {
-	char user_buf[255];
-	char *p;
-	(*ret) = read(0,user_buf,255);
+	write(1,"$ ",2);
+	char tmp_c[255];
+	char *user_buf;
+	(*ret) = read(0,tmp_c,255);
 	if((*ret) == -1)
 	{
 		printf("u_read\n");
 	}
-	user_buf[(*ret) - 1] = 0;
-	p = (char *)malloc((*ret) * sizeof(char));
+	tmp_c[(*ret) - 1] = 0;
+	//printf("%s\n",tmp_c);
+	user_buf = (char *)malloc((*ret) * sizeof(char));
 	int n = 0;
-	while (user_buf[n] == 0)
+	while (tmp_c[n] != 0)
 	{
-		p[n] = user_buf[n];
+		//printf("%c",tmp_c[n]);
+		user_buf[n] = tmp_c[n];
 		n = n + 1;
 	}
-	p = user_buf;
-	return p;
+	user_buf[(*ret) - 1] = 0;
+	return user_buf;
 }
