@@ -6,8 +6,8 @@ extern int FileSize(int fd);
 extern char* MyRead(int size,int fd);
 extern char* getuserinput (int *ret);
 extern int ext_str (int *loop_count,char *c,int ret,char *user_buf);
-extern void mycd(char *user_buf);
-
+extern int mycd(char *user_buf);
+extern int mypwd(void);
 int main ()
 {
 	int fd;
@@ -38,42 +38,17 @@ int main ()
 	{
 		char *user_buf = getuserinput(&ret);
 		//printf("1 user_buf = %s",user_buf);
+		if (user_buf[0] == '\n' || user_buf[0] == 0)
+			continue;
 		if (user_buf[0] == 'c' && user_buf[1] == 'd')
 		{
-			/*char *tmp = NULL;
-			if (user_buf[2] == '\n')
-			{
-				tmp = "/home";
-				if (chdir(tmp) == -1)
-					printf("error:cd\n");
-			}
-			else if (user_buf[2] == ' ')
-			{
-				//printf("cd 1\n");
-				int tmp_n = 3;
-				int loop_n = 1;
-				while (user_buf[tmp_n] != '\n')
-				{
-					tmp_n = tmp_n + 1;
-					loop_n = loop_n + 1;
-				}
-				//printf("2\n");
-				tmp = (char *)malloc(loop_n * sizeof(char));
-				tmp_n = 3;
-				loop_n = 0;
-				//printf("3");
-				while (user_buf[tmp_n] != '\n')
-				{
-					tmp[loop_n] = user_buf[tmp_n];
-					loop_n = loop_n + 1;
-					tmp_n = tmp_n + 1;
-				}
-				//printf("4");
-				tmp[loop_n] = 0;
-				chdir(tmp);
-				free(tmp);
-			}*/
-			mycd(user_buf);
+			if(mycd(user_buf))
+				continue;
+		}
+		if (user_buf[0] == 'p' && user_buf[1] == 'w' && user_buf[2] == 'd' || user_buf[3] == '\n')
+		{
+			if (!mypwd())
+				continue;
 		}
 		int loop_count = 0;
 		int last_flag = 0;
