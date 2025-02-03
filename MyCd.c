@@ -3,14 +3,17 @@
 #include<stdio.h>
 
 
-void mycd(char *user_buf)
+int mycd(char *user_buf)
 {
 	char *tmp = NULL;
 	if (user_buf[2] == '\n')
 	{
 		tmp = "/home";
 		if (chdir(tmp) == -1)
+		{
 			printf("error:cd\n");
+			return -1;
+		}
 	}
 	else if (user_buf[2] == ' ')
 	{
@@ -22,6 +25,11 @@ void mycd(char *user_buf)
 			loop_n = loop_n + 1;
 		}
 		tmp = (char *)malloc(loop_n * sizeof(char));
+		if (!tmp)
+		{
+			printf("error: mycd in malloc\n");
+			return -1;
+		}
 		tmp_n = 3;
 		loop_n = 0;
 		while (user_buf[tmp_n] != '\n')

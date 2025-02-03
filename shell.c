@@ -39,16 +39,25 @@ int main ()
 		char *user_buf = getuserinput(&ret);
 		//printf("1 user_buf = %s",user_buf);
 		if (user_buf[0] == '\n' || user_buf[0] == 0)
+		{
+			free(user_buf);
 			continue;
+		}
 		if (user_buf[0] == 'c' && user_buf[1] == 'd')
 		{
-			if(mycd(user_buf))
+			if(!mycd(user_buf))
+			{
+				free(user_buf);
 				continue;
+			}
 		}
 		if (user_buf[0] == 'p' && user_buf[1] == 'w' && user_buf[2] == 'd' || user_buf[3] == '\n')
 		{
 			if (!mypwd())
+			{
+				free(user_buf);
 				continue;
+			}
 		}
 		int loop_count = 0;
 		int last_flag = 0;
